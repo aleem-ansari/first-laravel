@@ -8,6 +8,21 @@
             Add or update your avatar
         </p>
     </header>
+    <img width=50 height= 50 class="rounded-full"  src="{{ "/storage/$user->avatar" }}" alt="User Avatar"/>
+
+    <form action="{{ route('profile.avatar.ai') }}" method="post" class="mt-4">
+        @csrf
+        @method('post')
+
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            Generate your Avatar using Ai
+        </p>
+        <x-primary-button>Generate Avatar</x-primary-button>
+    </form>
+
+        <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+            Or
+        </p>
 
     @if (session('message'))
     <div class="text-red-500">
@@ -15,12 +30,12 @@
     </div>
     @endif
 
-    <form method="post" action="{{ route('profile.avatar') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.avatar') }}" class="mt-2 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
         <div>
-            <x-input-label for="avatar" value="Avatar" />
+            <x-input-label for="avatar" value="Upload your own Avatar" />
             <x-text-input id="avatar" name="avatar" type="file" class="mt-1 block w-full" :value="old('avatar', $user->avatar)" required autofocus autocomplete="avatar" />
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
